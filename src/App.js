@@ -38,6 +38,18 @@ const App = () => {
     setMessage("You have been entered");
   };
 
+  const onHandlePickWinner = async () => {
+    const accounts = await web3.eth.getAccounts();
+
+    setMessage("Waiting for transaction to success..");
+
+    await lottery.methods.pickWinner().send({
+      from: accounts[0],
+    });
+
+    setMessage("A winner already picked");
+  };
+
   return (
     <div>
       <h2>Lottery Contract</h2>
@@ -56,6 +68,11 @@ const App = () => {
         />
         <button>Enter</button>
       </form>
+
+      <hr></hr>
+
+      <h3>Pick a winner</h3>
+      <button onClick={onHandlePickWinner}>pick a winner</button>
 
       <h1>{message}</h1>
     </div>
